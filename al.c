@@ -23,3 +23,8 @@ bool al_has(struct al const *al, char const *long_name)
 {
     return argvec_has(al->argc, al->argv, al->options, long_name);
 }
+
+char const *al_get(struct al const *al, char const *long_name)
+{
+    return argvec_get(al->argc, al->argv, al->options, long_name);
+}

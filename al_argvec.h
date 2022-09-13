@@ -10,5 +10,7 @@ bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
 void argvec_sort(int argc, char *argv[], struct al_opt const *opts);
 bool argvec_has(int argc, char *argv[], struct al_opt const *opts,
                 char const *long_name);
+char const *argvec_get(int argc, char *argv[], struct al_opt const *opts,
+                       char const *long_name);
 
 #endif

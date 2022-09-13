@@ -34,7 +34,7 @@ bool arg_is_long_opt_compact(char const *arg) { return strchr(arg, '='); }
 
 char const *arg_opt_compact_value(char const *arg)
 {
-    return strchr(arg, '=') + 1;
+    return arg_is_long_opt_compact(arg) ? strchr(arg, '=') + 1 : arg + 2;
 }
 
 bool arg_short_opt_eq(char const *arg, char short_name)

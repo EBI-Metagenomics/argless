@@ -12,7 +12,7 @@ struct al_opt const *opt_get(struct al_opt const *opts, char const *arg)
         if (arg_is_long_opt(arg) && arg_long_opt_eq(arg, opts[i].long_name))
             return &opts[i];
     }
-    return NULL;
+    return 0;
 }
 
 int opt_count(struct al_opt const *opts)

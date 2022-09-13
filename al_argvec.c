@@ -64,8 +64,27 @@ void argvec_sort(int argc, char *argv[], struct al_opt const *opts)
     }
 }
 
+static int option_index(int argc, char *argv[], struct al_opt const *opts,
+                        char const *long_name);
+
 bool argvec_has(int argc, char *argv[], struct al_opt const *opts,
                 char const *long_name)
+{
+    return option_index(argc, argv, opts, long_name) != -1;
+}
+
+char const *argvec_get(int argc, char *argv[], struct al_opt const *opts,
+                       char const *long_name)
+{
+    int i = option_index(argc, argv, opts, long_name);
+    if (i == -1) return 0;
+
+    return arg_is_opt_compact(argv[i]) ? arg_opt_compact_value(argv[i])
+                                       : argv[i + 1];
+}
+
+static int option_index(int argc, char *argv[], struct al_opt const *opts,
+                        char const *long_name)
 {
     for (int i = 1; i < argc; ++i)
     {
@@ -74,10 +93,10 @@ bool argvec_has(int argc, char *argv[], struct al_opt const *opts,
             struct al_opt const *opt = opt_get(opts, argv[i]);
             if (opt)
             {
-                if (!strcmp(opt->long_name, long_name)) return true;
+                if (!strcmp(opt->long_name, long_name)) return i;
                 i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
             }
         }
     }
-    return false;
+    return -1;
 }

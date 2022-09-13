@@ -18,5 +18,6 @@ struct al
 
 void al_parse(struct al *al, int argc, char *argv[]);
 bool al_has(struct al const *al, char const *long_name);
+char const *al_get(struct al const *al, char const *long_name);
 
 #endif
