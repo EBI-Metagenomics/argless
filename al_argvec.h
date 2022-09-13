@@ -5,8 +5,8 @@
 
 struct al_opt;
 
-bool argvec_check_integrity(int argc, char *argv[], int nopts,
-                            struct al_opt const *opts);
+bool argvec_check_valid(int argc, char *argv[], int nopts,
+                            struct al_opt const *opts, bool die);
 void argvec_sort(int argc, char *argv[], int nopts, struct al_opt const *opts);
 
 #endif

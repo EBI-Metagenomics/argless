@@ -25,21 +25,21 @@ static void test_integrity(void)
     static char *c3[] = {"prg", "ARG1", "-ooutput.txt"};
     static char *c4[] = {"prg", "ARG1"};
 
-    ASSERT(argvec_check_integrity(countof(c0), c0, opt_count(opts), opts));
-    ASSERT(argvec_check_integrity(countof(c1), c1, opt_count(opts), opts));
-    ASSERT(argvec_check_integrity(countof(c2), c2, opt_count(opts), opts));
-    ASSERT(argvec_check_integrity(countof(c3), c3, opt_count(opts), opts));
-    ASSERT(argvec_check_integrity(countof(c4), c4, opt_count(opts), opts));
+    ASSERT(argvec_check_valid(countof(c0), c0, opt_count(opts), opts, false));
+    ASSERT(argvec_check_valid(countof(c1), c1, opt_count(opts), opts, false));
+    ASSERT(argvec_check_valid(countof(c2), c2, opt_count(opts), opts, false));
+    ASSERT(argvec_check_valid(countof(c3), c3, opt_count(opts), opts, false));
+    ASSERT(argvec_check_valid(countof(c4), c4, opt_count(opts), opts, false));
 
     static char *w0[] = {"prg", "ARG1", "--output"};
     static char *w1[] = {"prg", "ARG1", "--outpuu=output.txt"};
     static char *w2[] = {"prg", "ARG1", "-o"};
     static char *w3[] = {"prg", "ARG1", "-uoutput.txt"};
 
-    ASSERT(!argvec_check_integrity(countof(w0), w0, opt_count(opts), opts));
-    ASSERT(!argvec_check_integrity(countof(w1), w1, opt_count(opts), opts));
-    ASSERT(!argvec_check_integrity(countof(w2), w2, opt_count(opts), opts));
-    ASSERT(!argvec_check_integrity(countof(w3), w3, opt_count(opts), opts));
+    ASSERT(!argvec_check_valid(countof(w0), w0, opt_count(opts), opts, false));
+    ASSERT(!argvec_check_valid(countof(w1), w1, opt_count(opts), opts, false));
+    ASSERT(!argvec_check_valid(countof(w2), w2, opt_count(opts), opts, false));
+    ASSERT(!argvec_check_valid(countof(w3), w3, opt_count(opts), opts, false));
 }
 
 static bool eqvec(int n, char *a[], char *b[]);
