@@ -2,7 +2,9 @@
 #define AL_ECHO_H
 
 void echo_start(int indent_width);
-void echo(const char *fmt, ...);
+void echof(char const *fmt, ...);
+void echos(char const *str);
+void echoc(char c);
 void echo_end(void);
 
 #endif

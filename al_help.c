@@ -1,4 +1,5 @@
 #include "al_help.h"
+#include "al_echo.h"
 #include "al_opt.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -9,31 +10,29 @@ static void display_try_info(char const *progam_name);
 void help_usage(char const *prog, int nopts, struct al_opt const *opts,
                 bool die)
 {
-    printf("Usage: %s ", prog);
+    echo_start(11);
+    echof("Usage: %s", prog);
 
-    fputs("[-", stdout);
+    echos(" [-");
     for (int i = 0; i < nopts; ++i)
     {
-        if (isprint(opts[i].short_name)) fputc(opts[i].short_name, stdout);
+        if (isprint(opts[i].short_name)) echoc(opts[i].short_name);
     }
-    fputs("]", stdout);
-
-    fputc(' ', stdout);
+    echos("]");
 
     for (int i = 0; i < nopts; ++i)
     {
         if (isprint(opts[i].short_name) && !opts[i].is_flag)
         {
-            printf("[-%c %s] ", opts[i].short_name, opts[i].arg_name);
+            echof(" [-%c %s]", opts[i].short_name, opts[i].arg_name);
         }
         if (opts[i].is_flag)
-            printf("[--%s]", opts[i].long_name);
+            echof(" [--%s]", opts[i].long_name);
         else
-            printf("[--%s=%s]", opts[i].long_name, opts[i].arg_name);
-        fputc(' ', stdout);
+            echof(" [--%s=%s]", opts[i].long_name, opts[i].arg_name);
     }
 
-    fputc('\n', stdout);
+    echo_end();
     if (die) exit(0);
 }
 

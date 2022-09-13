@@ -21,7 +21,7 @@ void echo_start(int indent_width)
     buf[0] = '\0';
 }
 
-void echo(const char *fmt, ...)
+void echof(char const *fmt, ...)
 {
     va_list va;
     va_start(va, fmt);
@@ -43,6 +43,10 @@ void echo(const char *fmt, ...)
     va_end(va);
 }
 
+void echos(char const *str) { echof("%s", str); }
+
+void echoc(char c) { echof("%c", c); }
+
 void echo_end(void)
 {
     if (pos > 0) puts(buf);
@@ -51,7 +55,7 @@ void echo_end(void)
 static void echo_empty_spaces(int n)
 {
     while (n-- > 0)
-        echo("%c", ' ');
+        echof("%c", ' ');
 }
 
 static void restart(void)
