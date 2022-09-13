@@ -36,6 +36,29 @@ void help_usage(char const *prog, int nopts, struct al_opt const *opts,
     if (die) exit(0);
 }
 
+void help_help(char const *prog, int nopts, struct al_opt const *opts, bool die)
+{
+    echo_start(28);
+    echof("Usage: %s [OPTION...] ARG1 ARG2", prog);
+    echoc('\n');
+    echo_flush();
+    for (int i = 0; i < nopts; ++i)
+    {
+        if (isprint(opts[i].short_name))
+        {
+            echof("  -%c, --%s", opts[i].short_name, opts[i].long_name);
+            echor(opts[i].arg_doc);
+        }
+        else
+        {
+            echof("      --%s", opts[i].long_name);
+            echor(opts[i].arg_doc);
+        }
+        echo_flush();
+    }
+    echo_end();
+}
+
 void help_requires_arg(char const *prog, char const *arg, bool die)
 {
     printf("%s: option `%s' requires an argument\n", prog, arg);

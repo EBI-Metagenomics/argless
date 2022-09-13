@@ -3,20 +3,20 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 #define NCOL 80
 
 static char buf[NCOL + 1] = {0};
 static size_t pos = 0;
-static int width = 0;
+static size_t width = 0;
 
 static void echo_empty_spaces(int n);
-static void restart(void);
 static void vecho(const char *fmt, va_list va);
 
 void echo_start(int indent_width)
 {
-    width = indent_width;
+    width = (size_t)indent_width;
     pos = 0;
     buf[0] = '\0';
 }
@@ -35,9 +35,9 @@ void echof(char const *fmt, ...)
     }
 
     buf[pos] = '\0';
-    restart();
+    echo_flush();
 
-    echo_empty_spaces(width);
+    echo_empty_spaces((int)width);
     va_start(va, fmt);
     vecho(fmt, va);
     va_end(va);
@@ -47,6 +47,21 @@ void echos(char const *str) { echof("%s", str); }
 
 void echoc(char c) { echof("%c", c); }
 
+void echor(char const *str)
+{
+    size_t size = strlen(str) + 2;
+    if (sizeof(buf) > pos + size)
+    {
+        echo_empty_spaces((int)(width - pos + 2));
+        echos(str);
+    }
+    else
+    {
+        echo_flush();
+        echof("  %s", str);
+    }
+}
+
 void echo_end(void)
 {
     if (pos > 0) puts(buf);
@@ -54,11 +69,11 @@ void echo_end(void)
 
 static void echo_empty_spaces(int n)
 {
-    while (n-- > 0)
+    while (--n > 0)
         echof("%c", ' ');
 }
 
-static void restart(void)
+void echo_flush(void)
 {
     if (pos > 0) puts(buf);
     pos = 0;
