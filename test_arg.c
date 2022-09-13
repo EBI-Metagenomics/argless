@@ -13,13 +13,13 @@ int main(void)
 
     ASSERT(arg_is_short_opt("-o"));
     ASSERT(arg_is_short_opt("-ooutput.txt"));
-    ASSERT(!arg_is_short_opt_compressed("-o"));
-    ASSERT(arg_is_short_opt_compressed("-ooutput.txt"));
+    ASSERT(!arg_is_short_opt_compact("-o"));
+    ASSERT(arg_is_short_opt_compact("-ooutput.txt"));
 
     ASSERT(arg_is_long_opt("--output"));
     ASSERT(arg_is_long_opt("--output=output.txt"));
-    ASSERT(!arg_is_long_opt_compressed("--output"));
-    ASSERT(arg_is_long_opt_compressed("--output=output.txt"));
+    ASSERT(!arg_is_long_opt_compact("--output"));
+    ASSERT(arg_is_long_opt_compact("--output=output.txt"));
 
     ASSERT(arg_short_opt_eq("-o", 'o'));
     ASSERT(!arg_short_opt_eq("-u", 'o'));

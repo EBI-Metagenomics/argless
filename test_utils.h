@@ -19,4 +19,6 @@ inline static void print_ctx(char const *func, char const *file, int line)
         }                                                                      \
     } while (0);
 
+#define countof(a) (sizeof(a) / sizeof(a[0]))
+
 #endif
