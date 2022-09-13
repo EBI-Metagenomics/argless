@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static void display_try_info(char const *progam_name);
 
@@ -35,12 +36,32 @@ void help_usage(char const *prog, struct al_opt const *opts, bool die)
     if (die) exit(0);
 }
 
-void help_help(char const *prog, struct al_opt const *opts, bool die)
+void help_help(char const *prog, char const *doc, struct al_opt const *opts,
+               bool die)
 {
-    echo_start(28);
+    echo_start(0);
     echof("Usage: %s [OPTION...] ARG1 ARG2", prog);
     echoc('\n');
-    echo_flush();
+    echo_end();
+
+    echo_start(2);
+    echoc(' ');
+    char const *start = doc;
+    char const *end = strchr(doc, ' ');
+    while (end)
+    {
+        echof(" %.*s", (end - start), start);
+        start = end + 1;
+        end = strchr(start, ' ');
+    }
+    echo_end();
+
+    echo_start(0);
+    echoc('\n');
+    echos("Options:");
+    echo_end();
+
+    echo_start(28);
     for (int i = 0; i < opt_count(opts); ++i)
     {
         if (isprint(opts[i].short_name))
@@ -55,6 +76,14 @@ void help_help(char const *prog, struct al_opt const *opts, bool die)
         }
         echo_flush();
     }
+    echo_end();
+    if (die) exit(0);
+}
+
+void help_version(char const *prog, char const *version, bool die)
+{
+    echo_start(0);
+    echof("%s, version %s", prog, version);
     echo_end();
     if (die) exit(0);
 }

@@ -47,6 +47,11 @@ static void test1(void)
 
     ASSERT(!strcmp(al_get(&al, "output"), "output.txt"));
     ASSERT(!strcmp(al_get(&al, "threshold"), "1.2"));
+
+    ASSERT(al_nargs(&al) == 2);
+    char **v = al_args(&al);
+    ASSERT(!strcmp(v[0], "ARG1"));
+    ASSERT(!strcmp(v[1], "ARG2"));
 }
 
 static void test2(void)
@@ -62,4 +67,8 @@ static void test2(void)
 
     ASSERT(!strcmp(al_get(&al, "output"), "output.txt"));
     ASSERT(!strcmp(al_get(&al, "threshold"), "1.2"));
+
+    ASSERT(al_nargs(&al) == 1);
+    char **v = al_args(&al);
+    ASSERT(!strcmp(v[0], "ARG1"));
 }

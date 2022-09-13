@@ -83,6 +83,28 @@ char const *argvec_get(int argc, char *argv[], struct al_opt const *opts,
                                        : argv[i + 1];
 }
 
+int argvec_nargs(int argc, char *argv[], struct al_opt const *opts)
+{
+    char **p = argvec_args(argc, argv, opts);
+    return &argv[argc] - p;
+}
+
+char **argvec_args(int argc, char *argv[], struct al_opt const *opts)
+{
+    int i = 1;
+    for (; i < argc; ++i)
+    {
+        if (arg_is_opt(argv[i]))
+        {
+            struct al_opt const *opt = opt_get(opts, argv[i]);
+            if (opt) i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
+        }
+        else
+            break;
+    }
+    return argv + i;
+}
+
 static int option_index(int argc, char *argv[], struct al_opt const *opts,
                         char const *long_name)
 {

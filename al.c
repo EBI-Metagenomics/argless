@@ -16,7 +16,10 @@ void al_parse(struct al *al, int argc, char *argv[])
         help_usage(progname, al->options, true);
 
     if (argvec_has(argc, argv, al->options, "help"))
-        help_help(progname, al->options, true);
+        help_help(progname, al->doc, al->options, true);
+
+    if (argvec_has(argc, argv, al->options, "version"))
+        help_version(progname, al->version, true);
 }
 
 bool al_has(struct al const *al, char const *long_name)
@@ -27,4 +30,14 @@ bool al_has(struct al const *al, char const *long_name)
 char const *al_get(struct al const *al, char const *long_name)
 {
     return argvec_get(al->argc, al->argv, al->options, long_name);
+}
+
+int al_nargs(struct al const *al)
+{
+    return argvec_nargs(al->argc, al->argv, al->options);
+}
+
+char **al_args(struct al const *al)
+{
+    return argvec_args(al->argc, al->argv, al->options);
 }
