@@ -1,5 +1,6 @@
 #include "al.h"
 #include "al_opt.h"
+#include "test_utils.h"
 
 static struct al_opt const options[] = {
     {"output", 'o', "OUTPUT", "Output file", false},
@@ -22,8 +23,15 @@ static struct al al = {
            "sunt in culpa qui officia deserunt mollit anim id est laborum.",
     .version = "1.0.0"};
 
-int main(int argc, char *argv[])
+int main(void)
 {
-    al_parse(&al, argc, argv);
+    static char *argv[] = {"prg",        "ARG1", "--output",
+                           "output.txt", "ARG2", "-f"};
+    al_parse(&al, countof(argv), argv);
+    ASSERT(al_has(&al, "output"));
+    ASSERT(al_has(&al, "fast"));
+    ASSERT(!al_has(&al, " output"));
+    ASSERT(!al_has(&al, "f"));
+    ASSERT(!al_has(&al, "nthreads"));
     return 0;
 }

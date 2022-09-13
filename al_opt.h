@@ -38,6 +38,6 @@ int opt_count(struct al_opt const *opts);
         0, 0, 0, 0, 0                                                          \
     }
 
-#define AL_DEFAULT_OPTS AL_HELP_OPT, AL_USAGE_OPT, AL_VERSION_OPT, AL_NULL_OPT
+#define AL_DEFAULT_OPTS AL_HELP_OPT, AL_USAGE_OPT, AL_VERSION_OPT
 
 #endif
