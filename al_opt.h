@@ -1,9 +1,9 @@
 #ifndef AL_OPT_H
 #define AL_OPT_H
 
-/* meld-cut-here */
 #include <stdbool.h>
 
+/* meld-cut-here */
 struct al_opt
 {
     char const *long_name;
@@ -16,9 +16,6 @@ struct al_opt
 #define AL_HELP_SHORT_NAME '?'
 #define AL_USAGE_SHORT_NAME -1
 #define AL_VERSION_SHORT_NAME 'V'
-
-struct al_opt const *opt_get(struct al_opt const *opts, char const *arg);
-int opt_count(struct al_opt const *opts);
 
 #define AL_HELP_OPT                                                            \
     {                                                                          \
@@ -41,5 +38,10 @@ int opt_count(struct al_opt const *opts);
 
 #define AL_DEFAULT_OPTS AL_HELP_OPT, AL_USAGE_OPT, AL_VERSION_OPT
 /* meld-cut-here */
+
+/* meld-cut-proto */
+struct al_opt const *opt_get(struct al_opt const *opts, char const *arg);
+int opt_count(struct al_opt const *opts);
+/* meld-cut-proto */
 
 #endif

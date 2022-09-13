@@ -3,7 +3,7 @@
 CC ?= gcc
 CFLAGS := $(CFLAGS) -std=c99 -Wall -Wextra
 
-SRC := al.c al_arg.c al_argvec.c al_basename.c al_echo.c al_help.c al_opt.c
+SRC := al_basename.c al_arg.c al_opt.c al_argvec.c al_echo.c al_help.c al.c
 HDR := al.h al_arg.h al_argvec.h al_basename.h al_echo.h al_help.h al_opt.h al_os.h
 OBJ := $(SRC:.c=.o)
 
@@ -12,8 +12,9 @@ all: meld example
 argless.h: $(HDR)
 	./meld.sh hdr $^ > $@
 
-argless.c: $(SRC) | argless.h
-	./meld.sh src $^ > $@
+argless.c: $(SRC) | $(HDR) argless.h
+	./meld.sh proto $(HDR) > $@
+	./meld.sh src $^ >> $@
 
 %.o: %.c $(HDR)
 	$(CC) $(CFLAGS) -c $<

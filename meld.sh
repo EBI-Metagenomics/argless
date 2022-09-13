@@ -1,14 +1,20 @@
 #!/bin/bash
 
 function display_usage {
-    echo "./meld.sh hdr|src FILES"
+    echo "./meld.sh hdr|src|proto FILES"
 }
 
 type=$1
 shift
 
-if [ "$type" != "hdr" ] && [ "$type" != "src" ]; then
+if [ "$type" != "hdr" ] && [ "$type" != "src" ] && [ "$type" != "proto" ]; then
     display_usage
+fi
+
+if [ "$type" == "proto" ]; then
+    cut=meld-cut-proto
+else
+    cut=meld-cut-here
 fi
 
 files=$*
@@ -16,7 +22,7 @@ files=$*
     if [ "$type" == "hdr" ]; then
         echo "#ifndef ARGLESS_H"
         echo "#define ARGLESS_H"
-    else
+    elif [ "$type" == "proto" ]; then
         echo "#include \"argless.h\""
     fi
     echo
@@ -25,8 +31,8 @@ files=$*
         display=0
 
         while IFS="" read -r p || [ -n "$p" ]; do
-            [[ "$p" =~ meld-cut-here ]] && display=$((display ^= 1)) && continue
-            [ $display == 1 ] && printf '%s\n' "$p" | sed 's/extern/static/'
+            [[ "$p" =~ $cut ]] && display=$((display ^= 1)) && continue
+            [ $display == 1 ] && printf '%s\n' "$p" | sed -E 's/^([a-z].*(help_|opt_|argvec_|echo|arg_)[a-z_]*\(.*)$/static \1/' | sed 's/static static/static/g'
         done <"$file"
 
         echo

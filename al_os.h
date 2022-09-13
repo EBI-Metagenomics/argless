@@ -1,7 +1,7 @@
 #ifndef AL_OS_H
 #define AL_OS_H
 
-/* meld-cut-here */
+/* meld-cut-proto */
 enum
 {
     AL_WINDOWS,
@@ -24,6 +24,6 @@ enum
 #ifndef AL_PATH_SEP
 #define AL_PATH_SEP '/'
 #endif
-/* meld-cut-here */
+/* meld-cut-proto */
 
 #endif
