@@ -1,12 +1,23 @@
 #include "al_argvec.h"
 #include "al_opt.h"
 #include "test_utils.h"
+#include <string.h>
 
 static struct al_opt const opts[] = {
     {"output", 'o', "OUTPUT", "Output doc", false},
 };
 
+static void test_integrity(void);
+static void test_sort(void);
+
 int main(void)
+{
+    test_integrity();
+    test_sort();
+    return 0;
+}
+
+static void test_integrity(void)
 {
     static char *c0[] = {"prg", "ARG1", "--output", "output.txt"};
     static char *c1[] = {"prg", "ARG1", "--output=output.txt"};
@@ -29,5 +40,49 @@ int main(void)
     ASSERT(!argvec_check_integrity(countof(w1), w1, opt_count(opts), opts));
     ASSERT(!argvec_check_integrity(countof(w2), w2, opt_count(opts), opts));
     ASSERT(!argvec_check_integrity(countof(w3), w3, opt_count(opts), opts));
-    return 0;
+}
+
+static bool eqvec(int n, char *a[], char *b[]);
+
+static void test_sort(void)
+{
+    static char *a0[] = {"prg", "ARG1", "--output", "output.txt"};
+    static char *desired0[] = {"prg", "--output", "output.txt", "ARG1"};
+
+    static char *a1[] = {"prg", "--output", "output.txt"};
+    static char *desired1[] = {"prg", "--output", "output.txt"};
+
+    static char *a2[] = {"prg"};
+    static char *desired2[] = {"prg"};
+
+    static char *a3[] = {"prg", "ARG1", "-ooutput.txt", "ARG2"};
+    static char *desired3[] = {"prg", "-ooutput.txt", "ARG1", "ARG2"};
+
+    static char *a4[] = {"prg", "ARG1", "-o", "output.txt", "ARG2"};
+    static char *desired4[] = {"prg", "-o", "output.txt", "ARG1", "ARG2"};
+
+    argvec_sort(countof(a0), a0, opt_count(opts), opts);
+    ASSERT(eqvec(countof(a0), a0, desired0));
+
+    argvec_sort(countof(a1), a1, opt_count(opts), opts);
+    ASSERT(eqvec(countof(a1), a1, desired1));
+
+    argvec_sort(countof(a2), a2, opt_count(opts), opts);
+    ASSERT(eqvec(countof(a2), a2, desired2));
+
+    argvec_sort(countof(a3), a3, opt_count(opts), opts);
+    ASSERT(eqvec(countof(a3), a3, desired3));
+
+    argvec_sort(countof(a4), a4, opt_count(opts), opts);
+    ASSERT(eqvec(countof(a4), a4, desired4));
+}
+
+static bool eqvec(int n, char *a[], char *b[])
+{
+    bool equal = true;
+    for (int i = 0; i < n; ++i)
+    {
+        equal = equal && !strcmp(a[i], b[i]);
+    }
+    return equal;
 }
