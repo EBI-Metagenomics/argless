@@ -11,6 +11,6 @@ static struct al_opt const opts[] = {
 
 int main(int argc, char *argv[])
 {
-    al_parse(argc, argv, opt_count(opts), opts);
+    al_parse(argc, argv, opts);
     return 0;
 }

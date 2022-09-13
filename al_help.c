@@ -7,20 +7,19 @@
 
 static void display_try_info(char const *progam_name);
 
-void help_usage(char const *prog, int nopts, struct al_opt const *opts,
-                bool die)
+void help_usage(char const *prog, struct al_opt const *opts, bool die)
 {
     echo_start(11);
     echof("Usage: %s", prog);
 
     echos(" [-");
-    for (int i = 0; i < nopts; ++i)
+    for (int i = 0; i < opt_count(opts); ++i)
     {
         if (isprint(opts[i].short_name)) echoc(opts[i].short_name);
     }
     echos("]");
 
-    for (int i = 0; i < nopts; ++i)
+    for (int i = 0; i < opt_count(opts); ++i)
     {
         if (isprint(opts[i].short_name) && !opts[i].is_flag)
         {
@@ -36,13 +35,13 @@ void help_usage(char const *prog, int nopts, struct al_opt const *opts,
     if (die) exit(0);
 }
 
-void help_help(char const *prog, int nopts, struct al_opt const *opts, bool die)
+void help_help(char const *prog, struct al_opt const *opts, bool die)
 {
     echo_start(28);
     echof("Usage: %s [OPTION...] ARG1 ARG2", prog);
     echoc('\n');
     echo_flush();
-    for (int i = 0; i < nopts; ++i)
+    for (int i = 0; i < opt_count(opts); ++i)
     {
         if (isprint(opts[i].short_name))
         {
@@ -57,6 +56,7 @@ void help_help(char const *prog, int nopts, struct al_opt const *opts, bool die)
         echo_flush();
     }
     echo_end();
+    if (die) exit(0);
 }
 
 void help_requires_arg(char const *prog, char const *arg, bool die)

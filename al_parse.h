@@ -3,6 +3,6 @@
 
 struct al_opt;
 
-void al_parse(int argc, char *argv[], int nopts, struct al_opt const *opts);
+void al_parse(int argc, char *argv[], struct al_opt const *opts);
 
 #endif

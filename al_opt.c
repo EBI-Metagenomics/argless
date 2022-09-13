@@ -3,10 +3,9 @@
 #include <stddef.h>
 #include <string.h>
 
-struct al_opt const *opt_get(int nopts, struct al_opt const *opts,
-                             char const *arg)
+struct al_opt const *opt_get(struct al_opt const *opts, char const *arg)
 {
-    for (int i = 0; i < nopts; ++i)
+    for (int i = 0; i < opt_count(opts); ++i)
     {
         if (arg_is_short_opt(arg) && arg_short_opt_eq(arg, opts[i].short_name))
             return &opts[i];
@@ -14,4 +13,16 @@ struct al_opt const *opt_get(int nopts, struct al_opt const *opts,
             return &opts[i];
     }
     return NULL;
+}
+
+int opt_count(struct al_opt const *opts)
+{
+    struct al_opt const *opt = opts;
+    int size = 0;
+    while (opt->long_name)
+    {
+        size++;
+        opt++;
+    }
+    return size;
 }

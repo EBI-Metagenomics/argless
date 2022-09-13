@@ -5,15 +5,15 @@
 #include "al_opt.h"
 #include <string.h>
 
-bool argvec_check_valid(int argc, char *argv[], int nopts,
-                        struct al_opt const *opts, bool die)
+bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
+                        bool die)
 {
     char const *prg = al_basename(argv[0]);
     for (int i = 1; i < argc; ++i)
     {
         if (!arg_is_opt(argv[i])) continue;
 
-        struct al_opt const *opt = opt_get(nopts, opts, argv[i]);
+        struct al_opt const *opt = opt_get(opts, argv[i]);
         if (!opt)
         {
             if (die) help_unrecognized_arg(prg, argv[i], die);
@@ -42,7 +42,7 @@ bool argvec_check_valid(int argc, char *argv[], int nopts,
     return true;
 }
 
-void argvec_sort(int argc, char *argv[], int nopts, struct al_opt const *opts)
+void argvec_sort(int argc, char *argv[], struct al_opt const *opts)
 {
     char *first_arg = 0;
     for (int i = 1; i < argc && first_arg != argv[i]; ++i)
@@ -58,20 +58,20 @@ void argvec_sort(int argc, char *argv[], int nopts, struct al_opt const *opts)
         }
         else
         {
-            struct al_opt const *opt = opt_get(nopts, opts, argv[i]);
+            struct al_opt const *opt = opt_get(opts, argv[i]);
             i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
         }
     }
 }
 
-bool argvec_has(int argc, char *argv[], int nopts, struct al_opt const *opts,
+bool argvec_has(int argc, char *argv[], struct al_opt const *opts,
                 char const *long_name)
 {
     for (int i = 1; i < argc; ++i)
     {
         if (arg_is_opt(argv[i]))
         {
-            struct al_opt const *opt = opt_get(nopts, opts, argv[i]);
+            struct al_opt const *opt = opt_get(opts, argv[i]);
             if (opt)
             {
                 if (!strcmp(opt->long_name, long_name)) return true;
