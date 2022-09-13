@@ -2,9 +2,10 @@
 #include "al_parse.h"
 
 static struct al_opt const opts[] = {
-    {"output", 'o', "OUTPUT", "Output doc", false},
-    AL_HELP_OPT,
-    AL_USAGE_OPT,
+    {"output", 'o', "OUTPUT", "Output file", false},
+    {"fast", 'f', 0, "Enable fast processing", true},
+    {"threshold", 't', "THRESHOLD", "Threshold on e-value", false},
+    AL_DEFAULT_OPTS,
 };
 
 int main(int argc, char *argv[])

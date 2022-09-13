@@ -63,3 +63,21 @@ void argvec_sort(int argc, char *argv[], int nopts, struct al_opt const *opts)
         }
     }
 }
+
+bool argvec_has(int argc, char *argv[], int nopts, struct al_opt const *opts,
+                char const *long_name)
+{
+    for (int i = 1; i < argc; ++i)
+    {
+        if (arg_is_opt(argv[i]))
+        {
+            struct al_opt const *opt = opt_get(nopts, opts, argv[i]);
+            if (opt)
+            {
+                if (!strcmp(opt->long_name, long_name)) return true;
+                i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
+            }
+        }
+    }
+    return false;
+}

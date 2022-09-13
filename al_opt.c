@@ -1,6 +1,7 @@
 #include "al_opt.h"
 #include "al_arg.h"
 #include <stddef.h>
+#include <string.h>
 
 struct al_opt const *opt_get(int nopts, struct al_opt const *opts,
                              char const *arg)

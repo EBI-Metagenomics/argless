@@ -3,13 +3,11 @@
 
 #include <stdbool.h>
 
-struct argd;
+struct al_opt;
 
-// void argd_help(struct argd const *);
-// void argd_help_try(struct argd const *);
-// void argd_help_usage(struct argd const *);
-void help_requires_arg(char const *program_name, char const *arg, bool die);
-void help_unrecognized_arg(char const *program_name, char const *arg, bool die);
-// void argd_help_requires(struct argd const *, char const *opt);
+void help_usage(char const *progname, int nopts, struct al_opt const *opts,
+                bool die);
+void help_requires_arg(char const *progname, char const *arg, bool die);
+void help_unrecognized_arg(char const *progname, char const *arg, bool die);
 
 #endif

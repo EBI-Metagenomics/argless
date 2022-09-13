@@ -3,8 +3,8 @@
 CC ?= gcc
 CFLAGS := $(CFLAGS) -std=c99 -Wall -Wextra
 
-SRC := al_arg.c al_argvec.c al_basename.c al_help.c al_opt.c al_parse.c
-HDR := al_arg.h al_argvec.h al_basename.h al_help.h al_opt.h al_os.h al_parse.h
+SRC := al_arg.c al_argvec.c al_basename.c al_echo.c al_help.c al_opt.c al_parse.c
+HDR := al_arg.h al_argvec.h al_basename.h al_echo.h al_help.h al_opt.h al_os.h al_parse.h
 OBJ := $(SRC:.c=.o)
 
 all: example
