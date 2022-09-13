@@ -3,6 +3,7 @@
 #include "al_basename.h"
 #include "al_help.h"
 #include "al_opt.h"
+/* meld-cut-here */
 #include <string.h>
 
 bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
@@ -122,3 +123,4 @@ static int option_index(int argc, char *argv[], struct al_opt const *opts,
     }
     return -1;
 }
+/* meld-cut-here */

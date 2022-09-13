@@ -1,6 +1,7 @@
 #ifndef AL_OPT_H
 #define AL_OPT_H
 
+/* meld-cut-here */
 #include <stdbool.h>
 
 struct al_opt
@@ -39,5 +40,6 @@ int opt_count(struct al_opt const *opts);
     }
 
 #define AL_DEFAULT_OPTS AL_HELP_OPT, AL_USAGE_OPT, AL_VERSION_OPT
+/* meld-cut-here */
 
 #endif

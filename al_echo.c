@@ -1,4 +1,5 @@
 #include "al_echo.h"
+/* meld-cut-here */
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -84,3 +85,4 @@ static void vecho(const char *fmt, va_list va)
 {
     pos += vsnprintf(buf + pos, sizeof(buf) - pos, fmt, va);
 }
+/* meld-cut-here */

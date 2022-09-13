@@ -1,4 +1,5 @@
 #include "al_arg.h"
+/* meld-cut-here */
 #include <stddef.h>
 #include <string.h>
 
@@ -58,3 +59,4 @@ static size_t arg_long_compact_opt_size(char const *arg)
     char const *p = strchr(arg, '=');
     return p - &arg[2];
 }
+/* meld-cut-here */

@@ -1,5 +1,6 @@
 #include "al_opt.h"
 #include "al_arg.h"
+/* meld-cut-here */
 #include <stddef.h>
 #include <string.h>
 
@@ -26,3 +27,4 @@ int opt_count(struct al_opt const *opts)
     }
     return size;
 }
+/* meld-cut-here */

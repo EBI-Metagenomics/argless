@@ -1,6 +1,7 @@
 #include "al_help.h"
 #include "al_echo.h"
 #include "al_opt.h"
+/* meld-cut-here */
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,3 +107,4 @@ static void display_try_info(char const *prg)
 {
     printf("Try `%s --help' or `%s --usage' for more information.\n", prg, prg);
 }
+/* meld-cut-here */

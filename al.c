@@ -3,6 +3,7 @@
 #include "al_basename.h"
 #include "al_help.h"
 
+/* meld-cut-here */
 void al_parse(struct al *al, int argc, char *argv[])
 {
     al->argc = argc;
@@ -41,3 +42,4 @@ char **al_args(struct al const *al)
 {
     return argvec_args(al->argc, al->argv, al->options);
 }
+/* meld-cut-here */
