@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 bool arg_is_opt(char const *arg);
+bool arg_is_opt_compact(char const *arg);
 bool arg_is_short_opt(char const *arg);
 bool arg_is_short_opt_compact(char const *arg);
 bool arg_is_long_opt(char const *arg);

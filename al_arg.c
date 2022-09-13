@@ -9,6 +9,12 @@ bool arg_is_opt(char const *arg)
     return arg_is_short_opt(arg) || arg_is_long_opt(arg);
 }
 
+bool arg_is_opt_compact(char const *arg)
+{
+    return arg_is_short_opt(arg) ? arg_is_short_opt_compact(arg)
+                                 : arg_is_long_opt_compact(arg);
+}
+
 bool arg_is_short_opt(char const *arg)
 {
     return strlen(arg) > 1 && arg[0] == '-' && arg[1] != '-';
