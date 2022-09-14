@@ -1,5 +1,7 @@
 .POSIX:
 
+ARGLESS_VERSION := 0.0.1
+
 CC ?= gcc
 CFLAGS := $(CFLAGS) -std=c99 -Wall -Wextra
 
@@ -56,7 +58,16 @@ check: test_argl test_arg test_argvec test_option example
 
 test: check
 
-clean:
+dist: clean argless.h argless.c
+	mkdir -p argless-$(ARGLESS_VERSION)
+	cp -R README.md LICENSE argless.h argless.c argless-$(ARGLESS_VERSION)
+	tar -cf - argless-$(ARGLESS_VERSION) | gzip > argless-$(ARGLESS_VERSION).tar.gz
+	rm -rf argless-$(ARGLESS_VERSION)
+
+distclean:
+	rm -f argless-$(ARGLESS_VERSION).tar.gz
+
+clean: distclean
 	rm -f *.o test_argl test_arg test_argvec test_option example argless.c argless.h
 
-.PHONY: all check test clean
+.PHONY: all check test clean dist distclean

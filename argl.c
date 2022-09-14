@@ -45,4 +45,10 @@ char **argl_args(struct argl const *al)
 {
     return argvec_args(al->argc, al->argv, al->options);
 }
+
+void argl_usage(struct argl const *al)
+{
+    char const *progname = al_basename(al->argv[0]);
+    help_usage(progname, al->options, EXIT_FAILURE);
+}
 /* meld-cut-here */
