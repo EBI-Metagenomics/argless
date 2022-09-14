@@ -4,6 +4,9 @@ Cross-platform argument parser for C/C++.
 
 ## Usage
 
+Download the latest [release](https://github.com/horta/argless/releases) and
+include `argless.h` and `argless.c` in your project.
+
 ### Minimal example
 
 ```c
