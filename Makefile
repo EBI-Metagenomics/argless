@@ -9,7 +9,7 @@ SRC := argl_basename.c argl_arg.c argl_option.c argl_argvec.c argl_echo.c argl_h
 HDR := argl.h argl_arg.h argl_argvec.h argl_basename.h argl_echo.h argl_help.h argl_option.h argl_os.h
 OBJ := $(SRC:.c=.o)
 
-all: check example
+all: check example minimal
 
 argless.h: $(HDR)
 	./meld.sh hdr $^ > $@
@@ -54,7 +54,15 @@ example: example.o argless.o
 	./example --help
 	./example --usage
 
-check: test_argl test_arg test_argvec test_option example
+minimal.o: argless.h
+
+minimal: minimal.o argless.o
+	$(CC) $^ $(CFLAGS) -o $@
+	./minimal --version
+	./minimal --help
+	./minimal --usage
+
+check: test_argl test_arg test_argvec test_option example minimal
 
 test: check
 
@@ -68,6 +76,6 @@ distclean:
 	rm -f argless-$(ARGLESS_VERSION).tar.gz
 
 clean: distclean
-	rm -f *.o test_argl test_arg test_argvec test_option example argless.c argless.h
+	rm -f *.o test_argl test_arg test_argvec test_option example minimal argless.c argless.h
 
 .PHONY: all check test clean dist distclean

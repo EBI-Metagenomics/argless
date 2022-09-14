@@ -18,7 +18,7 @@ void argl_parse(struct argl *al, int argc, char *argv[])
         help_usage(progname, al->options, EXIT_SUCCESS);
 
     if (argvec_has(argc, argv, al->options, "help"))
-        help_help(progname, al->doc, al->options, EXIT_SUCCESS);
+        help_help(progname, al->args_doc, al->doc, al->options, EXIT_SUCCESS);
 
     if (argvec_has(argc, argv, al->options, "version"))
         help_version(progname, al->version, EXIT_SUCCESS);

@@ -38,11 +38,11 @@ void help_usage(char const *prog, struct argl_option const *opts,
     exit(exit_status);
 }
 
-void help_help(char const *prog, char const *doc,
+void help_help(char const *prog, char const *args_doc, char const *doc,
                struct argl_option const *opts, int exit_status)
 {
     echo_start(0);
-    echof("Usage: %s [OPTION...] ARG1 ARG2", prog);
+    echof("Usage: %s [OPTION...] %s", prog, args_doc);
     echoc('\n');
     echo_end();
 
