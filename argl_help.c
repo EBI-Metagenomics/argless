@@ -42,7 +42,8 @@ void help_help(char const *prog, char const *args_doc, char const *doc,
                struct argl_option const *opts, int exit_status)
 {
     echo_start(0);
-    echof("Usage: %s [OPTION...] %s", prog, args_doc);
+    echof("Usage: %s [OPTION...]", prog);
+    if (args_doc) echof(" %s", args_doc);
     echoc('\n');
     echo_end();
 
