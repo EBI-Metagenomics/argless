@@ -1,8 +1,8 @@
-#include "al_opt.h"
+#include "argl_option.h"
 #include "test_utils.h"
 
-static struct al_opt const options[] = {
-    {"output", 'o', "OUTPUT", "Output doc", false}, AL_NULL_OPT};
+static struct argl_option const options[] = {
+    {"output", 'o', "OUTPUT", "Output doc", false}, ARGL_NULL_OPT};
 
 int main(void)
 {

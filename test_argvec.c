@@ -1,11 +1,11 @@
-#include "al_argvec.h"
-#include "al_opt.h"
+#include "argl_argvec.h"
+#include "argl_option.h"
 #include "test_utils.h"
 #include <string.h>
 
-static struct al_opt const opts[] = {
+static struct argl_option const opts[] = {
     {"output", 'o', "OUTPUT", "Output doc", false},
-    AL_NULL_OPT,
+    ARGL_NULL_OPT,
 };
 
 static void test_integrity(void);
