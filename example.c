@@ -1,13 +1,13 @@
-#include "al.h"
-#include "al_opt.h"
+#include "argl.h"
+#include "argl_option.h"
 
-static struct al_opt const options[] = {
+static struct argl_option const options[] = {
     {"output", 'o', "OUTPUT", "Output file", false},
     {"fast", 'f', 0, "Enable fast processing", true},
     {"threshold", 't', "THRESHOLD", "Threshold on e-value", false},
     {"nthreads", 'n', "NTHREADS", "Set the number of threads", false},
-    AL_DEFAULT_OPTS,
-    AL_NULL_OPT,
+    ARGL_DEFAULT_OPTS,
+    ARGL_NULL_OPT,
 };
 
 static struct al al = {

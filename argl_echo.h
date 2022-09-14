@@ -1,5 +1,5 @@
-#ifndef AL_ECHO_H
-#define AL_ECHO_H
+#ifndef ARGL_ECHO_H
+#define ARGL_ECHO_H
 
 /* meld-cut-proto */
 void echo_start(int indent_width);

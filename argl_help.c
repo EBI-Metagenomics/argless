@@ -1,6 +1,6 @@
-#include "al_help.h"
-#include "al_echo.h"
-#include "al_opt.h"
+#include "argl_help.h"
+#include "argl_echo.h"
+#include "argl_option.h"
 /* meld-cut-here */
 #include <ctype.h>
 #include <stdio.h>
@@ -9,7 +9,7 @@
 
 static void display_try_info(char const *progam_name);
 
-void help_usage(char const *prog, struct al_opt const *opts, bool die)
+void help_usage(char const *prog, struct argl_option const *opts, bool die)
 {
     echo_start(11);
     echof("Usage: %s", prog);
@@ -37,8 +37,8 @@ void help_usage(char const *prog, struct al_opt const *opts, bool die)
     if (die) exit(0);
 }
 
-void help_help(char const *prog, char const *doc, struct al_opt const *opts,
-               bool die)
+void help_help(char const *prog, char const *doc,
+               struct argl_option const *opts, bool die)
 {
     echo_start(0);
     echof("Usage: %s [OPTION...] ARG1 ARG2", prog);

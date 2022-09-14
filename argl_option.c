@@ -1,10 +1,11 @@
-#include "al_opt.h"
-#include "al_arg.h"
+#include "argl_option.h"
+#include "argl_arg.h"
 /* meld-cut-here */
 #include <stddef.h>
 #include <string.h>
 
-struct al_opt const *opt_get(struct al_opt const *opts, char const *arg)
+struct argl_option const *opt_get(struct argl_option const *opts,
+                                  char const *arg)
 {
     for (int i = 0; i < opt_count(opts); ++i)
     {
@@ -16,9 +17,9 @@ struct al_opt const *opt_get(struct al_opt const *opts, char const *arg)
     return 0;
 }
 
-int opt_count(struct al_opt const *opts)
+int opt_count(struct argl_option const *opts)
 {
-    struct al_opt const *opt = opts;
+    struct argl_option const *opt = opts;
     int size = 0;
     while (opt->long_name)
     {

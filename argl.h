@@ -1,14 +1,14 @@
-#ifndef AL_H
-#define AL_H
+#ifndef ARGL_H
+#define ARGL_H
 
 /* meld-cut-here */
 #include <stdbool.h>
 
-struct al_opt;
+struct argl_option;
 
 struct al
 {
-    struct al_opt const *options;
+    struct argl_option const *options;
     char const *args_doc;
     char const *doc;
     char const *version;

@@ -1,7 +1,7 @@
-#include "al.h"
-#include "al_argvec.h"
-#include "al_basename.h"
-#include "al_help.h"
+#include "argl.h"
+#include "argl_argvec.h"
+#include "argl_basename.h"
+#include "argl_help.h"
 
 /* meld-cut-here */
 void al_parse(struct al *al, int argc, char *argv[])

@@ -1,12 +1,12 @@
-#include "al_argvec.h"
-#include "al_arg.h"
-#include "al_basename.h"
-#include "al_help.h"
-#include "al_opt.h"
+#include "argl_argvec.h"
+#include "argl_arg.h"
+#include "argl_basename.h"
+#include "argl_help.h"
+#include "argl_option.h"
 /* meld-cut-here */
 #include <string.h>
 
-bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
+bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
                         bool die)
 {
     char const *prg = al_basename(argv[0]);
@@ -14,7 +14,7 @@ bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
     {
         if (!arg_is_opt(argv[i])) continue;
 
-        struct al_opt const *opt = opt_get(opts, argv[i]);
+        struct argl_option const *opt = opt_get(opts, argv[i]);
         if (!opt)
         {
             if (die) help_unrecognized_arg(prg, argv[i], die);
@@ -43,7 +43,7 @@ bool argvec_check_valid(int argc, char *argv[], struct al_opt const *opts,
     return true;
 }
 
-void argvec_sort(int argc, char *argv[], struct al_opt const *opts)
+void argvec_sort(int argc, char *argv[], struct argl_option const *opts)
 {
     char *first_arg = 0;
     for (int i = 1; i < argc && first_arg != argv[i]; ++i)
@@ -59,22 +59,22 @@ void argvec_sort(int argc, char *argv[], struct al_opt const *opts)
         }
         else
         {
-            struct al_opt const *opt = opt_get(opts, argv[i]);
+            struct argl_option const *opt = opt_get(opts, argv[i]);
             i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
         }
     }
 }
 
-static int option_index(int argc, char *argv[], struct al_opt const *opts,
+static int option_index(int argc, char *argv[], struct argl_option const *opts,
                         char const *long_name);
 
-bool argvec_has(int argc, char *argv[], struct al_opt const *opts,
+bool argvec_has(int argc, char *argv[], struct argl_option const *opts,
                 char const *long_name)
 {
     return option_index(argc, argv, opts, long_name) != -1;
 }
 
-char const *argvec_get(int argc, char *argv[], struct al_opt const *opts,
+char const *argvec_get(int argc, char *argv[], struct argl_option const *opts,
                        char const *long_name)
 {
     int i = option_index(argc, argv, opts, long_name);
@@ -84,20 +84,20 @@ char const *argvec_get(int argc, char *argv[], struct al_opt const *opts,
                                        : argv[i + 1];
 }
 
-int argvec_nargs(int argc, char *argv[], struct al_opt const *opts)
+int argvec_nargs(int argc, char *argv[], struct argl_option const *opts)
 {
     char **p = argvec_args(argc, argv, opts);
     return &argv[argc] - p;
 }
 
-char **argvec_args(int argc, char *argv[], struct al_opt const *opts)
+char **argvec_args(int argc, char *argv[], struct argl_option const *opts)
 {
     int i = 1;
     for (; i < argc; ++i)
     {
         if (arg_is_opt(argv[i]))
         {
-            struct al_opt const *opt = opt_get(opts, argv[i]);
+            struct argl_option const *opt = opt_get(opts, argv[i]);
             if (opt) i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
         }
         else
@@ -106,14 +106,14 @@ char **argvec_args(int argc, char *argv[], struct al_opt const *opts)
     return argv + i;
 }
 
-static int option_index(int argc, char *argv[], struct al_opt const *opts,
+static int option_index(int argc, char *argv[], struct argl_option const *opts,
                         char const *long_name)
 {
     for (int i = 1; i < argc; ++i)
     {
         if (arg_is_opt(argv[i]))
         {
-            struct al_opt const *opt = opt_get(opts, argv[i]);
+            struct argl_option const *opt = opt_get(opts, argv[i]);
             if (opt)
             {
                 if (!strcmp(opt->long_name, long_name)) return i;
