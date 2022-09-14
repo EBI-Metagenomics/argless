@@ -4,6 +4,7 @@
 #include "argl_help.h"
 #include "argl_option.h"
 /* meld-cut-here */
+#include <stdlib.h>
 #include <string.h>
 
 bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
@@ -17,7 +18,7 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
         struct argl_option const *opt = opt_get(opts, argv[i]);
         if (!opt)
         {
-            if (die) help_unrecognized_arg(prg, argv[i], die);
+            if (die) help_unrecognized_arg(prg, argv[i], EXIT_FAILURE);
             return false;
         }
 
@@ -25,7 +26,7 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
         {
             if (arg_is_opt_compact(argv[i]))
             {
-                if (die) help_unrecognized_arg(prg, argv[i], die);
+                if (die) help_unrecognized_arg(prg, argv[i], EXIT_FAILURE);
                 return false;
             }
         }
@@ -34,7 +35,7 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
             if (arg_is_opt_compact(argv[i])) continue;
             if (i + 1 == argc || arg_is_opt(argv[i + 1]))
             {
-                if (die) help_requires_arg(prg, argv[i], die);
+                if (die) help_requires_arg(prg, argv[i], EXIT_FAILURE);
                 return false;
             }
             ++i;

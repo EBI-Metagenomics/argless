@@ -2,6 +2,7 @@
 #include "argl_argvec.h"
 #include "argl_basename.h"
 #include "argl_help.h"
+#include <stdlib.h>
 
 /* meld-cut-here */
 void argl_parse(struct argl *al, int argc, char *argv[])
@@ -14,13 +15,15 @@ void argl_parse(struct argl *al, int argc, char *argv[])
     char const *progname = al_basename(argv[0]);
 
     if (argvec_has(argc, argv, al->options, "usage"))
-        help_usage(progname, al->options, true);
+        help_usage(progname, al->options, EXIT_SUCCESS);
 
     if (argvec_has(argc, argv, al->options, "help"))
-        help_help(progname, al->doc, al->options, true);
+        help_help(progname, al->doc, al->options, EXIT_SUCCESS);
 
     if (argvec_has(argc, argv, al->options, "version"))
-        help_version(progname, al->version, true);
+        help_version(progname, al->version, EXIT_SUCCESS);
+
+    if (argc == 1) help_usage(progname, al->options, EXIT_FAILURE);
 }
 
 bool argl_has(struct argl const *al, char const *long_name)

@@ -1,5 +1,4 @@
-#include "argl.h"
-#include "argl_option.h"
+#include "argless.h"
 
 static struct argl_option const options[] = {
     {"output", 'o', "OUTPUT", "Output file", false},

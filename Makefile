@@ -16,10 +16,11 @@ argless.c: $(SRC) | $(HDR) argless.h
 	./meld.sh proto $(HDR) > $@
 	./meld.sh src $^ >> $@
 
-%.o: %.c $(HDR)
+argless.o: argless.c | argless.h
 	$(CC) $(CFLAGS) -c $<
 
-meld: argless.h argless.c
+%.o: %.c $(HDR)
+	$(CC) $(CFLAGS) -c $<
 
 test_argl.o: test_utils.h
 test_arg.o: test_utils.h
@@ -43,7 +44,11 @@ test_option: test_option.o $(OBJ)
 	$(CC) $^ $(CFLAGS) -o $@
 	./test_option
 
-example: example.o $(OBJ)
+example.o: argless.h
+
+example: example.o argless.o
+	$(CC) $^ $(CFLAGS) -o $@
+	./example
 
 check: test_argl test_arg test_argvec test_option example
 
@@ -52,4 +57,4 @@ test: check
 clean:
 	rm -f *.o test_argl test_arg test_argvec test_option example argless.c argless.h
 
-.PHONY: all check test clean meld
+.PHONY: all check test clean

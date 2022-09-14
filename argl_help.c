@@ -9,7 +9,8 @@
 
 static void display_try_info(char const *progam_name);
 
-void help_usage(char const *prog, struct argl_option const *opts, bool die)
+void help_usage(char const *prog, struct argl_option const *opts,
+                int exit_status)
 {
     echo_start(11);
     echof("Usage: %s", prog);
@@ -34,11 +35,11 @@ void help_usage(char const *prog, struct argl_option const *opts, bool die)
     }
 
     echo_end();
-    if (die) exit(0);
+    exit(exit_status);
 }
 
 void help_help(char const *prog, char const *doc,
-               struct argl_option const *opts, bool die)
+               struct argl_option const *opts, int exit_status)
 {
     echo_start(0);
     echof("Usage: %s [OPTION...] ARG1 ARG2", prog);
@@ -78,29 +79,29 @@ void help_help(char const *prog, char const *doc,
         echo_flush();
     }
     echo_end();
-    if (die) exit(0);
+    exit(exit_status);
 }
 
-void help_version(char const *prog, char const *version, bool die)
+void help_version(char const *prog, char const *version, int exit_status)
 {
     echo_start(0);
     echof("%s, version %s", prog, version);
     echo_end();
-    if (die) exit(0);
+    exit(exit_status);
 }
 
-void help_requires_arg(char const *prog, char const *arg, bool die)
+void help_requires_arg(char const *prog, char const *arg, int exit_status)
 {
     printf("%s: option `%s' requires an argument\n", prog, arg);
     display_try_info(prog);
-    if (die) exit(1);
+    exit(exit_status);
 }
 
-void help_unrecognized_arg(char const *prog, char const *arg, bool die)
+void help_unrecognized_arg(char const *prog, char const *arg, int exit_status)
 {
     printf("%s: unrecognized option `%s'\n", prog, arg);
     display_try_info(prog);
-    if (die) exit(1);
+    exit(exit_status);
 }
 
 static void display_try_info(char const *prg)

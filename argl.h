@@ -16,12 +16,12 @@ struct argl
     int argc;
     char **argv;
 };
-/* meld-cut-here */
 
 void argl_parse(struct argl *al, int argc, char *argv[]);
 bool argl_has(struct argl const *al, char const *long_name);
 char const *argl_get(struct argl const *al, char const *long_name);
 int argl_nargs(struct argl const *al);
 char **argl_args(struct argl const *al);
+/* meld-cut-here */
 
 #endif
