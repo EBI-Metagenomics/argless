@@ -4,8 +4,8 @@
 static struct argl_option const options[] = {
     {"input", 'i', "INPUT", "Input file", false},
     {"output", 'o', "OUTPUT", "Output file", false},
-    {"fast", 'f', 0, "Enable fast processing", true},
-    {"quiet", 'q', 0, "Disable output to stdout", true},
+    {"fast", 'f', nullptr, "Enable fast processing", true},
+    {"quiet", 'q', nullptr, "Disable output to stdout", true},
     {"ncores", 'n', "NCORES", "Set the number of cores to use", false},
     ARGL_DEFAULT_OPTS,
     ARGL_NULL_OPT,
