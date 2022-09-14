@@ -10,7 +10,7 @@ static struct argl_option const options[] = {
     ARGL_NULL_OPT,
 };
 
-static struct al al = {
+static struct argl al = {
     .options = options,
     .args_doc = "ARG1 ARG2",
     .doc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
@@ -24,6 +24,6 @@ static struct al al = {
 
 int main(int argc, char *argv[])
 {
-    al_parse(&al, argc, argv);
+    argl_parse(&al, argc, argv);
     return 0;
 }

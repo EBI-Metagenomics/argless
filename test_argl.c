@@ -12,7 +12,7 @@ static struct argl_option const options[] = {
     ARGL_NULL_OPT,
 };
 
-static struct al al = {
+static struct argl al = {
     .options = options,
     .args_doc = "ARG1 ARG2",
     .doc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
@@ -38,18 +38,18 @@ static void test1(void)
 {
     static char *argv[] = {"prg",  "ARG1", "--output", "output.txt",
                            "ARG2", "-f",   "-t1.2"};
-    al_parse(&al, countof(argv), argv);
-    ASSERT(al_has(&al, "output"));
-    ASSERT(al_has(&al, "fast"));
-    ASSERT(!al_has(&al, " output"));
-    ASSERT(!al_has(&al, "f"));
-    ASSERT(!al_has(&al, "nthreads"));
+    argl_parse(&al, countof(argv), argv);
+    ASSERT(argl_has(&al, "output"));
+    ASSERT(argl_has(&al, "fast"));
+    ASSERT(!argl_has(&al, " output"));
+    ASSERT(!argl_has(&al, "f"));
+    ASSERT(!argl_has(&al, "nthreads"));
 
-    ASSERT(!strcmp(al_get(&al, "output"), "output.txt"));
-    ASSERT(!strcmp(al_get(&al, "threshold"), "1.2"));
+    ASSERT(!strcmp(argl_get(&al, "output"), "output.txt"));
+    ASSERT(!strcmp(argl_get(&al, "threshold"), "1.2"));
 
-    ASSERT(al_nargs(&al) == 2);
-    char **v = al_args(&al);
+    ASSERT(argl_nargs(&al) == 2);
+    char **v = argl_args(&al);
     ASSERT(!strcmp(v[0], "ARG1"));
     ASSERT(!strcmp(v[1], "ARG2"));
 }
@@ -58,17 +58,17 @@ static void test2(void)
 {
     static char *argv[] = {"prg", "ARG1", "--output=output.txt",
                            "-f",  "-t",   "1.2"};
-    al_parse(&al, countof(argv), argv);
-    ASSERT(al_has(&al, "output"));
-    ASSERT(al_has(&al, "fast"));
-    ASSERT(!al_has(&al, " output"));
-    ASSERT(!al_has(&al, "f"));
-    ASSERT(!al_has(&al, "nthreads"));
+    argl_parse(&al, countof(argv), argv);
+    ASSERT(argl_has(&al, "output"));
+    ASSERT(argl_has(&al, "fast"));
+    ASSERT(!argl_has(&al, " output"));
+    ASSERT(!argl_has(&al, "f"));
+    ASSERT(!argl_has(&al, "nthreads"));
 
-    ASSERT(!strcmp(al_get(&al, "output"), "output.txt"));
-    ASSERT(!strcmp(al_get(&al, "threshold"), "1.2"));
+    ASSERT(!strcmp(argl_get(&al, "output"), "output.txt"));
+    ASSERT(!strcmp(argl_get(&al, "threshold"), "1.2"));
 
-    ASSERT(al_nargs(&al) == 1);
-    char **v = al_args(&al);
+    ASSERT(argl_nargs(&al) == 1);
+    char **v = argl_args(&al);
     ASSERT(!strcmp(v[0], "ARG1"));
 }

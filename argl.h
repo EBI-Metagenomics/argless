@@ -6,7 +6,7 @@
 
 struct argl_option;
 
-struct al
+struct argl
 {
     struct argl_option const *options;
     char const *args_doc;
@@ -18,10 +18,10 @@ struct al
 };
 /* meld-cut-here */
 
-void al_parse(struct al *al, int argc, char *argv[]);
-bool al_has(struct al const *al, char const *long_name);
-char const *al_get(struct al const *al, char const *long_name);
-int al_nargs(struct al const *al);
-char **al_args(struct al const *al);
+void argl_parse(struct argl *al, int argc, char *argv[]);
+bool argl_has(struct argl const *al, char const *long_name);
+char const *argl_get(struct argl const *al, char const *long_name);
+int argl_nargs(struct argl const *al);
+char **argl_args(struct argl const *al);
 
 #endif

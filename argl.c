@@ -4,7 +4,7 @@
 #include "argl_help.h"
 
 /* meld-cut-here */
-void al_parse(struct al *al, int argc, char *argv[])
+void argl_parse(struct argl *al, int argc, char *argv[])
 {
     al->argc = argc;
     al->argv = argv;
@@ -23,22 +23,22 @@ void al_parse(struct al *al, int argc, char *argv[])
         help_version(progname, al->version, true);
 }
 
-bool al_has(struct al const *al, char const *long_name)
+bool argl_has(struct argl const *al, char const *long_name)
 {
     return argvec_has(al->argc, al->argv, al->options, long_name);
 }
 
-char const *al_get(struct al const *al, char const *long_name)
+char const *argl_get(struct argl const *al, char const *long_name)
 {
     return argvec_get(al->argc, al->argv, al->options, long_name);
 }
 
-int al_nargs(struct al const *al)
+int argl_nargs(struct argl const *al)
 {
     return argvec_nargs(al->argc, al->argv, al->options);
 }
 
-char **al_args(struct al const *al)
+char **argl_args(struct argl const *al)
 {
     return argvec_args(al->argc, al->argv, al->options);
 }

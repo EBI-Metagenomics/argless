@@ -7,7 +7,7 @@ SRC := argl_basename.c argl_arg.c argl_option.c argl_argvec.c argl_echo.c argl_h
 HDR := argl.h argl_arg.h argl_argvec.h argl_basename.h argl_echo.h argl_help.h argl_option.h argl_os.h
 OBJ := $(SRC:.c=.o)
 
-all: example
+all: check example
 
 argless.h: $(HDR)
 	./meld.sh hdr $^ > $@
