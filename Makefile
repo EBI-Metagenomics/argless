@@ -48,7 +48,9 @@ example.o: argless.h
 
 example: example.o argless.o
 	$(CC) $^ $(CFLAGS) -o $@
-	./example
+	./example --version
+	./example --help
+	./example --usage
 
 check: test_argl test_arg test_argvec test_option example
 
