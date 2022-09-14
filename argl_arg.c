@@ -38,12 +38,9 @@ char const *arg_opt_compact_value(char const *arg)
     return arg_is_long_opt_compact(arg) ? strchr(arg, '=') + 1 : arg + 2;
 }
 
-bool arg_short_opt_eq(char const *arg, char short_name)
-{
-    return arg[1] == short_name;
-}
+bool arg_short_opt_eq(char const *arg, char key) { return arg[1] == key; }
 
-bool arg_long_opt_eq(char const *arg, char const *long_name)
+bool arg_long_opt_eq(char const *arg, char const *name)
 {
     size_t size = 0;
     if (arg_is_long_opt_compact(arg))
@@ -51,7 +48,7 @@ bool arg_long_opt_eq(char const *arg, char const *long_name)
     else
         size = strlen(arg + 2);
 
-    return size == strlen(long_name) && !strncmp(arg + 2, long_name, size);
+    return size == strlen(name) && !strncmp(arg + 2, name, size);
 }
 
 static size_t arg_long_compact_opt_size(char const *arg)

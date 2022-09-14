@@ -6,29 +6,29 @@
 /* meld-cut-here */
 struct argl_option
 {
-    char const *long_name;
-    char const short_name;
+    char const *name;
+    char const key;
     char const *arg_name;
     char const *arg_doc;
     bool is_flag;
 };
 
-#define ARGL_HELP_SHORT_NAME '?'
-#define ARGL_USAGE_SHORT_NAME -1
-#define ARGL_VERSION_SHORT_NAME 'V'
+#define ARGL_HELP_KEY '?'
+#define ARGL_USAGE_KEY -1
+#define ARGL_VERSION_KEY 'V'
 
 #define ARGL_HELP_OPT                                                          \
     {                                                                          \
-        "help", ARGL_HELP_SHORT_NAME, 0, "Give this help list", true           \
+        "help", ARGL_HELP_KEY, 0, "Give this help list", true                  \
     }
 #define ARGL_USAGE_OPT                                                         \
     {                                                                          \
-        "usage", ARGL_USAGE_SHORT_NAME, 0, "Give a short usage message", true  \
+        "usage", ARGL_USAGE_KEY, 0, "Give a short usage message", true         \
     }
 
 #define ARGL_VERSION_OPT                                                       \
     {                                                                          \
-        "version", ARGL_VERSION_SHORT_NAME, 0, "Print program version", true   \
+        "version", ARGL_VERSION_KEY, 0, "Print program version", true          \
     }
 
 #define ARGL_NULL_OPT                                                          \

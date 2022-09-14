@@ -26,14 +26,14 @@ void argl_parse(struct argl *al, int argc, char *argv[])
     if (argc == 1) help_usage(progname, al->options, EXIT_FAILURE);
 }
 
-bool argl_has(struct argl const *al, char const *long_name)
+bool argl_has(struct argl const *al, char const *name)
 {
-    return argvec_has(al->argc, al->argv, al->options, long_name);
+    return argvec_has(al->argc, al->argv, al->options, name);
 }
 
-char const *argl_get(struct argl const *al, char const *long_name)
+char const *argl_get(struct argl const *al, char const *name)
 {
-    return argvec_get(al->argc, al->argv, al->options, long_name);
+    return argvec_get(al->argc, al->argv, al->options, name);
 }
 
 int argl_nargs(struct argl const *al)

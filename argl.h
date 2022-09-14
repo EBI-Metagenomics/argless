@@ -17,12 +17,12 @@ struct argl
     char **argv;
 };
 
-void argl_parse(struct argl *al, int argc, char *argv[]);
-bool argl_has(struct argl const *al, char const *long_name);
-char const *argl_get(struct argl const *al, char const *long_name);
-int argl_nargs(struct argl const *al);
-char **argl_args(struct argl const *al);
-void argl_usage(struct argl const *al);
+void argl_parse(struct argl *, int argc, char *argv[]);
+bool argl_has(struct argl const *, char const *name);
+char const *argl_get(struct argl const *, char const *name);
+int argl_nargs(struct argl const *);
+char **argl_args(struct argl const *);
+void argl_usage(struct argl const *);
 /* meld-cut-here */
 
 #endif

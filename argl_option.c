@@ -9,9 +9,9 @@ struct argl_option const *opt_get(struct argl_option const *opts,
 {
     for (int i = 0; i < opt_count(opts); ++i)
     {
-        if (arg_is_short_opt(arg) && arg_short_opt_eq(arg, opts[i].short_name))
+        if (arg_is_short_opt(arg) && arg_short_opt_eq(arg, opts[i].key))
             return &opts[i];
-        if (arg_is_long_opt(arg) && arg_long_opt_eq(arg, opts[i].long_name))
+        if (arg_is_long_opt(arg) && arg_long_opt_eq(arg, opts[i].name))
             return &opts[i];
     }
     return 0;
@@ -21,7 +21,7 @@ int opt_count(struct argl_option const *opts)
 {
     struct argl_option const *opt = opts;
     int size = 0;
-    while (opt->long_name)
+    while (opt->name)
     {
         size++;
         opt++;

@@ -18,20 +18,20 @@ void help_usage(char const *prog, struct argl_option const *opts,
     echos(" [-");
     for (int i = 0; i < opt_count(opts); ++i)
     {
-        if (isprint(opts[i].short_name)) echoc(opts[i].short_name);
+        if (isprint(opts[i].key)) echoc(opts[i].key);
     }
     echos("]");
 
     for (int i = 0; i < opt_count(opts); ++i)
     {
-        if (isprint(opts[i].short_name) && !opts[i].is_flag)
+        if (isprint(opts[i].key) && !opts[i].is_flag)
         {
-            echof(" [-%c %s]", opts[i].short_name, opts[i].arg_name);
+            echof(" [-%c %s]", opts[i].key, opts[i].arg_name);
         }
         if (opts[i].is_flag)
-            echof(" [--%s]", opts[i].long_name);
+            echof(" [--%s]", opts[i].name);
         else
-            echof(" [--%s=%s]", opts[i].long_name, opts[i].arg_name);
+            echof(" [--%s=%s]", opts[i].name, opts[i].arg_name);
     }
 
     echo_end();
@@ -66,14 +66,14 @@ void help_help(char const *prog, char const *doc,
     echo_start(28);
     for (int i = 0; i < opt_count(opts); ++i)
     {
-        if (isprint(opts[i].short_name))
+        if (isprint(opts[i].key))
         {
-            echof("  -%c, --%s", opts[i].short_name, opts[i].long_name);
+            echof("  -%c, --%s", opts[i].key, opts[i].name);
             echor(opts[i].arg_doc);
         }
         else
         {
-            echof("      --%s", opts[i].long_name);
+            echof("      --%s", opts[i].name);
             echor(opts[i].arg_doc);
         }
         echo_flush();
