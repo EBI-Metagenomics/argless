@@ -57,6 +57,7 @@ void help_help(char const *prog, char const *args_doc, char const *doc,
         start = end + 1;
         end = strchr(start, ' ');
     }
+    if (strlen(start) > 0) echof(" %s", start);
     echo_end();
 
     echo_start(0);

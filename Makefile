@@ -1,6 +1,6 @@
 .POSIX:
 
-ARGLESS_VERSION := 0.0.3
+ARGLESS_VERSION := 0.0.4
 
 CC ?= gcc
 CFLAGS := $(CFLAGS) -std=c99 -Wall -Wextra
@@ -62,9 +62,7 @@ minimal: minimal.o argless.o
 	./minimal --help
 	./minimal --usage
 
-check: test_argl test_arg test_argvec test_option example minimal
-
-test: check
+test check: test_argl test_arg test_argvec test_option example minimal
 
 dist: clean argless.h argless.c
 	mkdir -p argless-$(ARGLESS_VERSION)

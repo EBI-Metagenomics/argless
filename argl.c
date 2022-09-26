@@ -49,4 +49,9 @@ void argl_usage(struct argl const *al)
     char const *progname = al_basename(al->argv[0]);
     help_usage(progname, al->options, EXIT_FAILURE);
 }
+
+char const *argl_progname(struct argl const *al)
+{
+    return al_basename(al->argv[0]);
+}
 /* meld-cut-here */
