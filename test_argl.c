@@ -4,10 +4,10 @@
 #include <string.h>
 
 static struct argl_option const options[] = {
-    {"output", 'o', "OUTPUT", "Output file", false},
-    {"fast", 'f', nullptr, "Enable fast processing", true},
-    {"threshold", 't', "THRESHOLD", "Threshold on e-value", false},
-    {"nthreads", 'n', "NTHREADS", "Set the number of threads", false},
+    {"output", 'o', "OUTPUT", "Output file", ARGL_HASVALUE},
+    {"fast", 'f', NULL, "Enable fast processing", ARGL_NOVALUE},
+    {"threshold", 't', "THRESHOLD", "Threshold on e-value", ARGL_HASVALUE},
+    {"nthreads", 'n', "NTHREADS", "Set the number of threads", ARGL_HASVALUE},
     ARGL_DEFAULT_OPTS,
     ARGL_NULL_OPT,
 };

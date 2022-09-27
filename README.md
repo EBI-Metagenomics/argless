@@ -18,7 +18,7 @@ static struct argl_option const options[] = {
 };
 
 static struct argl argl = {.options = options,
-                           .args_doc = nullptr,
+                           .args_doc = NULL,
                            .doc = "Lorem ipsum dolor sit amet.",
                            .version = "1.0.0"};
 
@@ -60,11 +60,11 @@ Usage: minimal [-?V] [--help] [--usage] [--version]
 #include <stdio.h>
 
 static struct argl_option const options[] = {
-    {"input", 'i', "INPUT", "Input file", false},
-    {"output", 'o', "OUTPUT", "Output file", false},
-    {"fast", 'f', nullptr, "Enable fast processing", true},
-    {"quiet", 'q', nullptr, "Disable output to stdout", true},
-    {"ncores", 'n', "NCORES", "Set the number of cores to use", false},
+    {"input", 'i', "INPUT", "Input file", ARGL_HASVALUE},
+    {"output", 'o', "OUTPUT", "Output file", ARGL_HASVALUE},
+    {"fast", 'f', NULL, "Enable fast processing", ARGL_NOVALUE},
+    {"quiet", 'q', NULL, "Disable output to stdout", ARGL_NOVALUE},
+    {"ncores", 'n', "NCORES", "Set the number of cores to use", ARGL_HASVALUE},
     ARGL_DEFAULT_OPTS,
     ARGL_NULL_OPT,
 };

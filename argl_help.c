@@ -24,14 +24,14 @@ void help_usage(char const *prog, struct argl_option const *opts,
 
     for (int i = 0; i < opt_count(opts); ++i)
     {
-        if (isprint(opts[i].key) && !opts[i].is_flag)
+        if (isprint(opts[i].key) && opts[i].has_value)
         {
             echof(" [-%c %s]", opts[i].key, opts[i].arg_name);
         }
-        if (opts[i].is_flag)
-            echof(" [--%s]", opts[i].name);
-        else
+        if (opts[i].has_value)
             echof(" [--%s=%s]", opts[i].name, opts[i].arg_name);
+        else
+            echof(" [--%s]", opts[i].name);
     }
 
     echo_end();

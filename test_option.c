@@ -2,7 +2,7 @@
 #include "test_utils.h"
 
 static struct argl_option const options[] = {
-    {"output", 'o', "OUTPUT", "Output doc", false}, ARGL_NULL_OPT};
+    {"output", 'o', "OUTPUT", "Output doc", ARGL_HASVALUE}, ARGL_NULL_OPT};
 
 int main(void)
 {

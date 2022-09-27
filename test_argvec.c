@@ -4,7 +4,7 @@
 #include <string.h>
 
 static struct argl_option const opts[] = {
-    {"output", 'o', "OUTPUT", "Output doc", false},
+    {"output", 'o', "OUTPUT", "Output doc", ARGL_HASVALUE},
     ARGL_NULL_OPT,
 };
 

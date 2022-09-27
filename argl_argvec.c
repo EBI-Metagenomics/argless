@@ -22,15 +22,7 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
             return false;
         }
 
-        if (opt->is_flag)
-        {
-            if (arg_is_opt_compact(argv[i]))
-            {
-                if (die) help_unrecognized_arg(prg, argv[i], EXIT_FAILURE);
-                return false;
-            }
-        }
-        else
+        if (opt->has_value)
         {
             if (arg_is_opt_compact(argv[i])) continue;
             if (i + 1 == argc || arg_is_opt(argv[i + 1]))
@@ -39,6 +31,14 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
                 return false;
             }
             ++i;
+        }
+        else
+        {
+            if (arg_is_opt_compact(argv[i]))
+            {
+                if (die) help_unrecognized_arg(prg, argv[i], EXIT_FAILURE);
+                return false;
+            }
         }
     }
     return true;
@@ -61,7 +61,7 @@ void argvec_sort(int argc, char *argv[], struct argl_option const *opts)
         else
         {
             struct argl_option const *opt = opt_get(opts, argv[i]);
-            i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
+            i += opt->has_value && !arg_is_opt_compact(argv[i]);
         }
     }
 }
@@ -99,7 +99,7 @@ char **argvec_args(int argc, char *argv[], struct argl_option const *opts)
         if (arg_is_opt(argv[i]))
         {
             struct argl_option const *opt = opt_get(opts, argv[i]);
-            if (opt) i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
+            if (opt) i += opt->has_value && !arg_is_opt_compact(argv[i]);
         }
         else
             break;
@@ -118,7 +118,7 @@ static int option_index(int argc, char *argv[], struct argl_option const *opts,
             if (opt)
             {
                 if (!strcmp(opt->name, name)) return i;
-                i += !opt->is_flag && !arg_is_opt_compact(argv[i]);
+                i += opt->has_value && !arg_is_opt_compact(argv[i]);
             }
         }
     }

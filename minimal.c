@@ -6,7 +6,7 @@ static struct argl_option const options[] = {
 };
 
 static struct argl argl = {.options = options,
-                           .args_doc = nullptr,
+                           .args_doc = NULL,
                            .doc = "Lorem ipsum dolor sit amet.",
                            .version = "1.0.0"};
 
