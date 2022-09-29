@@ -4,12 +4,13 @@
 #include <string.h>
 
 static struct argl_option const options[] = {
-    {"output", 'o', "OUTPUT", "Output file", ARGL_HASVALUE},
-    {"fast", 'f', NULL, "Enable fast processing", ARGL_NOVALUE},
-    {"threshold", 't', "THRESHOLD", "Threshold on e-value", ARGL_HASVALUE},
-    {"nthreads", 'n', "NTHREADS", "Set the number of threads", ARGL_HASVALUE},
-    ARGL_DEFAULT_OPTS,
-    ARGL_NULL_OPT,
+    {"output", 'o', ARGL_TEXT("OUTPUT", ARGL_NULL), "Output file"},
+    {"fast", 'f', ARGL_FLAG(), "Enable fast processing"},
+    {"threshold", 't', ARGL_TEXT("THRESHOLD", ARGL_NULL),
+     "Threshold on e-value"},
+    {"nthreads", 'n', ARGL_TEXT("NTHREADS", "1"), "Set the number of threads"},
+    ARGL_DEFAULT,
+    ARGL_END,
 };
 
 static struct argl al = {
@@ -44,6 +45,7 @@ static void test1(void)
     ASSERT(!argl_has(&al, " output"));
     ASSERT(!argl_has(&al, "f"));
     ASSERT(!argl_has(&al, "nthreads"));
+    ASSERT(!strcmp(argl_get(&al, "nthreads"), "1"));
 
     ASSERT(!strcmp(argl_get(&al, "output"), "output.txt"));
     ASSERT(!strcmp(argl_get(&al, "threshold"), "1.2"));

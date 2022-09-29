@@ -16,20 +16,20 @@ void help_usage(char const *prog, struct argl_option const *opts,
     echof("Usage: %s", prog);
 
     echos(" [-");
-    for (int i = 0; i < opt_count(opts); ++i)
+    for (int i = 0; i < opts_count(opts); ++i)
     {
         if (isprint(opts[i].key)) echoc(opts[i].key);
     }
     echos("]");
 
-    for (int i = 0; i < opt_count(opts); ++i)
+    for (int i = 0; i < opts_count(opts); ++i)
     {
-        if (isprint(opts[i].key) && opts[i].has_value)
+        if (isprint(opts[i].key) && !opt_is_flag(opts + i))
         {
-            echof(" [-%c %s]", opts[i].key, opts[i].arg_name);
+            echof(" [-%c %s]", opts[i].key, opt_arg_name(opts + i));
         }
-        if (opts[i].has_value)
-            echof(" [--%s=%s]", opts[i].name, opts[i].arg_name);
+        if (!opt_is_flag(opts + i))
+            echof(" [--%s=%s]", opts[i].name, opt_arg_name(opts + i));
         else
             echof(" [--%s]", opts[i].name);
     }
@@ -66,18 +66,17 @@ void help_help(char const *prog, char const *args_doc, char const *doc,
     echo_end();
 
     echo_start(28);
-    for (int i = 0; i < opt_count(opts); ++i)
+    for (int i = 0; i < opts_count(opts); ++i)
     {
         if (isprint(opts[i].key))
-        {
             echof("  -%c, --%s", opts[i].key, opts[i].name);
-            echor(opts[i].arg_doc);
-        }
         else
-        {
             echof("      --%s", opts[i].name);
+
+        if (opt_has_user_default(opts + i))
+            echor2(opts[i].arg_doc, opt_get_default(opts + i));
+        else
             echor(opts[i].arg_doc);
-        }
         echo_flush();
     }
     echo_end();

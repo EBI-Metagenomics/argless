@@ -63,6 +63,21 @@ void echor(char const *str)
     }
 }
 
+void echor2(char const *str, char const *default_value)
+{
+    size_t size = strlen(str) + 2;
+    if (sizeof(buf) > pos + size)
+    {
+        echo_empty_spaces((int)(width - pos + 2));
+        echof("%s [%s]", str, default_value);
+    }
+    else
+    {
+        echo_flush();
+        echof("  %s [%s]", str, default_value);
+    }
+}
+
 void echo_end(void)
 {
     if (pos > 0) puts(buf);

@@ -2,18 +2,22 @@
 #include "test_utils.h"
 
 static struct argl_option const options[] = {
-    {"output", 'o', "OUTPUT", "Output doc", ARGL_HASVALUE}, ARGL_NULL_OPT};
+    {"input", 'i', ARGL_TEXT("INPUT", ARGL_NULL), "Input doc"},
+    {"output", 'o', ARGL_TEXT("OUTPUT", "/dev/null"), "Output doc"},
+    {"fast", 'f', ARGL_FLAG(), "Fast doc"},
+    {"verbose", 'v', ARGL_FLAG(), "Verbose doc"},
+    ARGL_END};
 
 int main(void)
 {
-    ASSERT(opt_get(options, "--output"));
-    ASSERT(opt_get(options, "--output=output.txt"));
-    ASSERT(opt_get(options, "-o"));
-    ASSERT(opt_get(options, "-ooutput.txt"));
+    ASSERT(opts_search(options, "--output"));
+    ASSERT(opts_search(options, "--output=output.txt"));
+    ASSERT(opts_search(options, "-o"));
+    ASSERT(opts_search(options, "-ooutput.txt"));
 
-    ASSERT(!opt_get(options, "--outpuu"));
-    ASSERT(!opt_get(options, "--outpuu=output.txt"));
-    ASSERT(!opt_get(options, "-u"));
-    ASSERT(!opt_get(options, "-uoutput.txt"));
+    ASSERT(!opts_search(options, "--outpuu"));
+    ASSERT(!opts_search(options, "--outpuu=output.txt"));
+    ASSERT(!opts_search(options, "-u"));
+    ASSERT(!opts_search(options, "-uoutput.txt"));
     return 0;
 }

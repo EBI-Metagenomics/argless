@@ -4,8 +4,8 @@
 #include <string.h>
 
 static struct argl_option const opts[] = {
-    {"output", 'o', "OUTPUT", "Output doc", ARGL_HASVALUE},
-    ARGL_NULL_OPT,
+    {"output", 'o', ARGL_TEXT("OUTPUT", ARGL_NULL), "Output doc"},
+    ARGL_END,
 };
 
 static void test_integrity(void);

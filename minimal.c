@@ -1,12 +1,12 @@
 #include "argless.h"
 
 static struct argl_option const options[] = {
-    ARGL_DEFAULT_OPTS,
-    ARGL_NULL_OPT,
+    ARGL_DEFAULT,
+    ARGL_END,
 };
 
 static struct argl argl = {.options = options,
-                           .args_doc = NULL,
+                           .args_doc = ARGL_NULL,
                            .doc = "Lorem ipsum dolor sit amet.",
                            .version = "1.0.0"};
 

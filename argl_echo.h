@@ -7,6 +7,7 @@ void echof(char const *fmt, ...);
 void echos(char const *str);
 void echoc(char c);
 void echor(char const *str);
+void echor2(char const *str, char const *default_value);
 void echo_flush(void);
 void echo_end(void);
 /* meld-cut-proto */

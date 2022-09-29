@@ -2,6 +2,7 @@
 #include "argl_argvec.h"
 #include "argl_basename.h"
 #include "argl_help.h"
+#include "argl_option.h"
 #include <stdlib.h>
 
 /* meld-cut-here */
@@ -31,13 +32,16 @@ bool argl_has(struct argl const *al, char const *name)
 
 char const *argl_get(struct argl const *al, char const *name)
 {
-    return argvec_get(al->argc, al->argv, al->options, name);
-}
+    struct argl_option const *opt = opts_get(al->options, name);
+    if (!opt) return "";
 
-char const *argl_grab(struct argl const *al, char const *name,
-                      char const *value)
-{
-    return argl_has(al, name) ? argl_get(al, name) : value;
+    if (opt_is_flag(opt)) return argl_has(al, name) ? "true" : "false";
+
+    if (argl_has(al, name))
+        return argvec_get(al->argc, al->argv, al->options, name);
+
+    char const *value = opt_get_default(opt);
+    return value ? value : "";
 }
 
 int argl_nargs(struct argl const *al)
