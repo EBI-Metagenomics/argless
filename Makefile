@@ -1,6 +1,6 @@
 .POSIX:
 
-ARGLESS_VERSION := 0.4.0
+ARGLESS_VERSION := 0.4.1
 
 CC ?= gcc
 CFLAGS := $(CFLAGS) -std=c99 -Wall -Wextra
