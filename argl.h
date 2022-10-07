@@ -23,6 +23,7 @@ char const *argl_get(struct argl const *, char const *name);
 int argl_nargs(struct argl const *);
 char **argl_args(struct argl const *);
 void argl_usage(struct argl const *);
+void argl_usage2(struct argl const *, int exit_status);
 char const *argl_program(struct argl const *);
 /* meld-cut-here */
 
