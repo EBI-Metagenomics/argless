@@ -27,7 +27,8 @@ void argl_parse(struct argl *al, int argc, char *argv[])
 
 bool argl_has(struct argl const *al, char const *name)
 {
-    return argvec_has(al->argc, al->argv, al->options, name);
+    int n = al->argc - argvec_nargs(al->argc, al->argv, al->options);
+    return argvec_has(n, al->argv, al->options, name);
 }
 
 char const *argl_get(struct argl const *al, char const *name)

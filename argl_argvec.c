@@ -10,10 +10,12 @@
 bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
                         bool die)
 {
+    bool force_arg = false;
     char const *prg = al_basename(argv[0]);
     for (int i = 1; i < argc; ++i)
     {
-        if (!arg_is_opt(argv[i])) continue;
+        if (!strcmp(argv[i], "--")) force_arg = true;
+        if (force_arg || !arg_is_opt(argv[i])) continue;
 
         struct argl_option const *opt = opts_search(opts, argv[i]);
         if (!opt)
@@ -25,7 +27,8 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
         if (!opt_is_flag(opt))
         {
             if (arg_is_opt_compact(argv[i])) continue;
-            if (i + 1 == argc || arg_is_opt(argv[i + 1]))
+            if (i + 1 == argc || arg_is_opt(argv[i + 1]) ||
+                !strcmp(argv[i + 1], "--"))
             {
                 if (die) help_requires_arg(prg, argv[i], EXIT_FAILURE);
                 return false;
@@ -46,10 +49,12 @@ bool argvec_check_valid(int argc, char *argv[], struct argl_option const *opts,
 
 void argvec_sort(int argc, char *argv[], struct argl_option const *opts)
 {
+    bool force_arg = false;
     char *first_arg = 0;
     for (int i = 1; i < argc && first_arg != argv[i]; ++i)
     {
-        if (!arg_is_opt(argv[i]))
+        if (!strcmp(argv[i], "--")) force_arg = true;
+        if (force_arg || !arg_is_opt(argv[i]))
         {
             char *curr = argv[i];
             size_t size = argc - 1 - i;
@@ -93,6 +98,7 @@ int argvec_nargs(int argc, char *argv[], struct argl_option const *opts)
 
 char **argvec_args(int argc, char *argv[], struct argl_option const *opts)
 {
+    argvec_sort(argc, argv, opts);
     int i = 1;
     for (; i < argc; ++i)
     {

@@ -9,12 +9,16 @@ static struct argl_option const opts[] = {
 };
 
 static void test_integrity(void);
+static void test_integrity_double_dash(void);
 static void test_sort(void);
+static void test_sort_double_dash(void);
 
 int main(void)
 {
     test_integrity();
+    test_integrity_double_dash();
     test_sort();
+    test_sort_double_dash();
     return 0;
 }
 
@@ -31,6 +35,11 @@ static void test_integrity(void)
     ASSERT(argvec_check_valid(countof(c2), c2, opts, false));
     ASSERT(argvec_check_valid(countof(c3), c3, opts, false));
     ASSERT(argvec_check_valid(countof(c4), c4, opts, false));
+    ASSERT(argvec_nargs(countof(c0), c0, opts) == 1);
+    ASSERT(argvec_nargs(countof(c1), c1, opts) == 1);
+    ASSERT(argvec_nargs(countof(c2), c2, opts) == 1);
+    ASSERT(argvec_nargs(countof(c3), c3, opts) == 1);
+    ASSERT(argvec_nargs(countof(c4), c4, opts) == 1);
 
     static char *w0[] = {"prg", "ARG1", "--output"};
     static char *w1[] = {"prg", "ARG1", "--outpuu=output.txt"};
@@ -41,6 +50,50 @@ static void test_integrity(void)
     ASSERT(!argvec_check_valid(countof(w1), w1, opts, false));
     ASSERT(!argvec_check_valid(countof(w2), w2, opts, false));
     ASSERT(!argvec_check_valid(countof(w3), w3, opts, false));
+}
+
+static void test_integrity_double_dash(void)
+{
+    static char *c0[] = {"prg", "ARG1", "--", "--output", "output.txt"};
+    static char *c1[] = {"prg", "--", "ARG1", "--output=output.txt"};
+    static char *c2[] = {"prg", "ARG1", "-o", "output.txt", "--"};
+    static char *c3[] = {"prg", "ARG1", "--", "-ooutput.txt"};
+    static char *c4[] = {"prg", "ARG1", "--"};
+
+    ASSERT(argvec_check_valid(countof(c0), c0, opts, false));
+    ASSERT(argvec_check_valid(countof(c1), c1, opts, false));
+    ASSERT(argvec_check_valid(countof(c2), c2, opts, false));
+    ASSERT(argvec_check_valid(countof(c3), c3, opts, false));
+    ASSERT(argvec_check_valid(countof(c4), c4, opts, false));
+    ASSERT(argvec_nargs(countof(c0), c0, opts) == 4);
+    ASSERT(argvec_nargs(countof(c1), c1, opts) == 3);
+    ASSERT(argvec_nargs(countof(c2), c2, opts) == 2);
+    ASSERT(argvec_nargs(countof(c3), c3, opts) == 3);
+    ASSERT(argvec_nargs(countof(c4), c4, opts) == 2);
+
+    static char *w0[] = {"prg", "ARG1", "--output", "--"};
+    static char *w1[] = {"prg", "ARG1", "--outpuu=output.txt", "--"};
+    static char *w2[] = {"prg", "ARG1", "-o", "--"};
+    static char *w3[] = {"prg", "ARG1", "-uoutput.txt", "--"};
+
+    ASSERT(!argvec_check_valid(countof(w0), w0, opts, false));
+    ASSERT(!argvec_check_valid(countof(w1), w1, opts, false));
+    ASSERT(!argvec_check_valid(countof(w2), w2, opts, false));
+    ASSERT(!argvec_check_valid(countof(w3), w3, opts, false));
+
+    static char *v0[] = {"prg", "ARG1", "--", "--output"};
+    static char *v1[] = {"prg", "ARG1", "--", "--outpuu=output.txt"};
+    static char *v2[] = {"prg", "ARG1", "--", "-o"};
+    static char *v3[] = {"prg", "--", "ARG1", "-uoutput.txt"};
+
+    ASSERT(argvec_check_valid(countof(v0), v0, opts, false));
+    ASSERT(argvec_check_valid(countof(v1), v1, opts, false));
+    ASSERT(argvec_check_valid(countof(v2), v2, opts, false));
+    ASSERT(argvec_check_valid(countof(v3), v3, opts, false));
+    ASSERT(argvec_nargs(countof(v0), v0, opts) == 3);
+    ASSERT(argvec_nargs(countof(v1), v1, opts) == 3);
+    ASSERT(argvec_nargs(countof(v2), v2, opts) == 3);
+    ASSERT(argvec_nargs(countof(v3), v3, opts) == 3);
 }
 
 static bool eqvec(int n, char *a[], char *b[]);
@@ -61,6 +114,39 @@ static void test_sort(void)
 
     static char *a4[] = {"prg", "ARG1", "-o", "output.txt", "ARG2"};
     static char *desired4[] = {"prg", "-o", "output.txt", "ARG1", "ARG2"};
+
+    argvec_sort(countof(a0), a0, opts);
+    ASSERT(eqvec(countof(a0), a0, desired0));
+
+    argvec_sort(countof(a1), a1, opts);
+    ASSERT(eqvec(countof(a1), a1, desired1));
+
+    argvec_sort(countof(a2), a2, opts);
+    ASSERT(eqvec(countof(a2), a2, desired2));
+
+    argvec_sort(countof(a3), a3, opts);
+    ASSERT(eqvec(countof(a3), a3, desired3));
+
+    argvec_sort(countof(a4), a4, opts);
+    ASSERT(eqvec(countof(a4), a4, desired4));
+}
+
+static void test_sort_double_dash(void)
+{
+    static char *a0[] = {"prg", "ARG1", "--", "--output", "output.txt"};
+    static char *desired0[] = {"prg", "ARG1", "--", "--output", "output.txt"};
+
+    static char *a1[] = {"prg", "--output", "output.txt", "--"};
+    static char *desired1[] = {"prg", "--output", "output.txt", "--"};
+
+    static char *a2[] = {"prg", "--"};
+    static char *desired2[] = {"prg", "--"};
+
+    static char *a3[] = {"prg", "--", "ARG1", "-ooutput.txt", "ARG2"};
+    static char *desired3[] = {"prg", "--", "ARG1", "-ooutput.txt", "ARG2"};
+
+    static char *a4[] = {"prg", "ARG1", "-o", "output.txt", "--", "ARG2"};
+    static char *desired4[] = {"prg", "-o", "output.txt", "ARG1", "--", "ARG2"};
 
     argvec_sort(countof(a0), a0, opts);
     ASSERT(eqvec(countof(a0), a0, desired0));
