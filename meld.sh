@@ -32,7 +32,7 @@ files=$*
 
         while IFS="" read -r p || [ -n "$p" ]; do
             [[ "$p" =~ $cut ]] && display=$((display ^= 1)) && continue
-            [ $display == 1 ] && printf '%s\n' "$p" | sed -E 's/^([a-z].*(help_|opt_|argvec_|echo|arg_)[a-z_]*\(.*)$/static \1/' | sed 's/static static/static/g'
+            [ $display == 1 ] && printf '%s\n' "$p" | sed -E 's/^([a-z].*(al_|help_|opts_|opt_|argvec_|echo|arg_)[a-z0-9_]*\(.*)$/static \1/' | sed 's/static static/static/g'
         done <"$file"
 
         echo
